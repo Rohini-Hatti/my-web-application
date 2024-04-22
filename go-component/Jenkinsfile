@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+ 
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/yourusername/your-github-repo.git'
+            }
+        }
+ 
+        stage('Build') {
+            steps {
+                sh 'go build -o yourapp'
+            }
+        }
+ 
+        stage('Test') {
+            steps {
+                sh 'go test ./...'
+            }
+        }
+ 
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: 'yourapp', fingerprint: true
+            }
+        }
+    }
+}
